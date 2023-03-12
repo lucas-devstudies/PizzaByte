@@ -1,6 +1,6 @@
-CREATE DATABASE CodePizzaNet;
+CREATE DATABASE PizzaByte;
 
-USE CodePizzaNet;
+USE PizzaByte;
 
 CREATE TABLE Produtos(
 	IdProduto INT IDENTITY(1,1) PRIMARY KEY,
@@ -28,10 +28,15 @@ CREATE TABLE Vendas(
 	TipoVenda BIT,
 	idCliente INT,
 	idProduto INT,
+	idMotoboy INT,
 	CONSTRAINT fk_clientes_id FOREIGN KEY (idCliente) 
 	REFERENCES Clientes(IdCliente),
+
 	CONSTRAINT fk_produtos_id FOREIGN KEY (idProduto)
-	REFERENCES Produtos(IdProduto)
+	REFERENCES Produtos(IdProduto),
+
+	CONSTRAINT fk_motoboy_id FOREIGN KEY (idMotoboy)
+	REFERENCES Motoboy(IdMotoboy)
 );
 
 CREATE TABLE Motoboy(
@@ -43,6 +48,16 @@ CREATE TABLE Motoboy(
 	ValorMotoboy DECIMAL(10,2)
 );
 
-CREATE TABLE ProdutoCliente(
-	idProduto INT
+CREATE TABLE ProdutoVenda(
+	IdProduto INT,
+	IdVenda INT,
+	Quantidade INT,
+	PRIMARY KEY (IdProduto, IdVenda),
+	CONSTRAINT fk_produto_id FOREIGN KEY (IdProduto)
+	REFERENCES Produtos(IdProduto),
+	CONSTRAINT fk_venda_id FOREIGN KEY (IdVenda)
+	REFERENCES Vendas(IdVenda)
 );
+
+select * from Vendas;
+
