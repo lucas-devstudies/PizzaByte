@@ -28,36 +28,33 @@ CREATE TABLE Vendas(
 	TipoVenda BIT,
 	idCliente INT,
 	idProduto INT,
-	idMotoboy INT,
+	idEntrega INT,
 	CONSTRAINT fk_clientes_id FOREIGN KEY (idCliente) 
 	REFERENCES Clientes(IdCliente),
-
 	CONSTRAINT fk_produtos_id FOREIGN KEY (idProduto)
 	REFERENCES Produtos(IdProduto),
-
-	CONSTRAINT fk_motoboy_id FOREIGN KEY (idMotoboy)
-	REFERENCES Motoboy(IdMotoboy)
+	CONSTRAINT fk_entrega_id FOREIGN KEY (idEntrega)
+	REFERENCES Entrega(IdEntrega)
 );
 
-CREATE TABLE Motoboy(
-	IdMotoboy INT IDENTITY(1,1) PRIMARY KEY,
+CREATE TABLE Entrega(
+	IdEntrega INT IDENTITY(1,1) PRIMARY KEY,
 	NomeMotoboy VARCHAR(255),
 	VeiculoMotoboy VARCHAR(255),
-	EnderecoMotoboy VARCHAR(255),
 	TelefoneMotoboy VARCHAR(16),
-	ValorMotoboy DECIMAL(10,2)
+	ValorMotoboy DECIMAL(10,2),
+	ValorEntrega DECIMAL (18,2)
 );
 
-CREATE TABLE ProdutoVenda(
+CREATE TABLE ProdutoCliente(
 	IdProduto INT,
+	QuantidadePC INT,
 	IdVenda INT,
-	Quantidade INT,
-	PRIMARY KEY (IdProduto, IdVenda),
-	CONSTRAINT fk_produto_id FOREIGN KEY (IdProduto)
+	Sabores VARCHAR,
+	Obs VARCHAR,
+	PRIMARY KEY (IdProduto,IdVenda),
+	CONSTRAINT fk_IdProduto FOREIGN KEY (IdProduto)
 	REFERENCES Produtos(IdProduto),
-	CONSTRAINT fk_venda_id FOREIGN KEY (IdVenda)
+	CONSTRAINT fk_IdVenda FOREIGN KEY (IdVenda)
 	REFERENCES Vendas(IdVenda)
 );
-
-select * from Vendas;
-
