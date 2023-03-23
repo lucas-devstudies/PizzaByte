@@ -12,7 +12,7 @@ CREATE TABLE Produtos(
 
 CREATE TABLE Usuarios(
 	IdCliente INT IDENTITY(1,1) PRIMARY KEY,
-	TipoCliente CHAR,
+	TipoCliente CHAR(1),
 	NomeCliente VARCHAR(255),
 	TelefoneCliente VARCHAR(16), /*Imaginei que VARCHAR seria melhor por conta das barrinhas ex: (99) 9 9999-9999*/
 	EmailCliente VARCHAR(255),
@@ -29,6 +29,10 @@ CREATE TABLE Entrega(
 	ValorMotoboy DECIMAL(10,2)
 );
 
+CREATE TABLE Carrinho(
+	IdCarrinho INT PRIMARY KEY IDENTITY(1,1),
+	Observacao VARCHAR (255),
+);
 
 CREATE TABLE Vendas(
 	IdVenda INT IDENTITY(1,1) PRIMARY KEY,
@@ -36,7 +40,7 @@ CREATE TABLE Vendas(
 	StatusVenda VARCHAR(255),
 	DataVenda datetime,
 	Preco DECIMAL(5,2),
-	TipoVenda CHAR,
+	TipoVenda CHAR(1),
 	idCliente INT,
 	idEntrega INT,
 	idCarrinho INT,
@@ -47,15 +51,12 @@ CREATE TABLE Vendas(
 	CONSTRAINT fk_carrinho_id FOREIGN KEY (idCarrinho)
 	REFERENCES Carrinho(IdCarrinho)
 );
-CREATE TABLE Carrinho(
-	IdCarrinho INT PRIMARY KEY,
-	Sabores VARCHAR (255),
-	Observacao VARCHAR (255),
-);
+
 CREATE TABLE CarrinhoProduto(
 	IdCarrinho int,
-	QuantidadePC INT,
 	IdProduto int,
+	QuantidadePC INT,
+	Sabores VARCHAR (255),
 	PRIMARY KEY (IdCarrinho, IdProduto),
 	FOREIGN KEY(IdProduto)
 	REFERENCES Produtos(IdProduto),
@@ -63,40 +64,109 @@ CREATE TABLE CarrinhoProduto(
 	REFERENCES Carrinho(IdCarrinho)
 );
 
-drop table Carrinho;
-DROP DATABASE PizzaByte;
-
-INSERT INTO Produtos
-(NomeProduto, CategoriaProduto,
-DescricaoProduto, ValorProduto)
+insert into Usuarios 
+(TipoCliente, NomeCliente, TelefoneCliente, 
+EmailCliente, SenhaCliente,Endereco)
 VALUES 
-('Pizza pequena tradicional', 'Pizza', 'Pizza Pequena até 2 sabores', 18.90);
+('C', 'Lucas', '(00)0000-0000', 'lucas@email.com', 
+'senha123', 'Amazonas')
 
-INSERT INTO Usuarios
-(NomeCliente, TelefoneCliente, EmailCliente, SenhaCliente, Endereco)
+insert into Usuarios 
+(TipoCliente, NomeCliente, TelefoneCliente, 
+EmailCliente, SenhaCliente,Endereco)
 VALUES 
-('Taís Waine', '(92) 99111-1111', 'taisWaine@gmail.com', 'senhadatais', 'Avenida Paulista, n57, casa verde');
+('C', 'Laura', '(11)1111-1111', 'laura@email.com', 
+'senha123', 'Rio Grande do Sul')
+
+insert into Usuarios 
+(TipoCliente, NomeCliente, TelefoneCliente, 
+EmailCliente, SenhaCliente,Endereco)
+VALUES 
+('C', 'Tais', '(22)0000-0000', 'tais@email.com', 
+'senha123', 'São Paulo')
+
+
+select *
+from Usuarios;
+
+insert into Produtos
+(NomeProduto, CategoriaProduto, DescricaoProduto, ValorProduto)
+values
+('Pizza Pequena Tradicional', 'Pizza Tradicional', 'Pizza para até uma pessoa', 18.90)
+
+insert into Produtos
+(NomeProduto, CategoriaProduto, DescricaoProduto, ValorProduto)
+values
+('Pizza Média Tradicional', 'Pizza Tradicional', 'Pizza para até 3 pessoas', 49.90)
+
+insert into Produtos
+(NomeProduto, CategoriaProduto, DescricaoProduto, ValorProduto)
+values
+('Pizza Grande Tradicional', 'Pizza Tradicional', 'Pizza para até 5 pessoas', 65.00)
+
+
+select *
+from Produtos;
 
 INSERT INTO Entrega
-(NomeMotoboy, VeiculoMotoboy, TelefoneMotoboy, ValorEntrega, ValorMotoboy)
+(NomeMotoboy, VeiculoMotoboy, TelefoneMotoboy, 
+ValorEntrega,ValorMotoboy)
 VALUES
-('Carlos Alberto', 'Moto Honda pr 147', '(92) 99999-9999', 10.00, 5.00)
+('Elenilson', 'Honda Biz', '(33)0000-0000',
+10.00, 0.10)
 
-INSERT INTO Carrinho
-(IdCarrinho, QuantidadePC, Sabores, Observacao)
+
+select *
+from Entrega;
+
+INSERT INTO Carrinho(Observacao)
+VALUES ('Sem Cebola');
+
+INSERT INTO Carrinho(Observacao)
+VALUES ('Sem glútem, sem borda')
+
+INSERT INTO Carrinho(Observacao)
+VALUES ('Sou alergica a queijo, faça com massa bem assada e escreva uma mensagem na caixa')
+
+
+select *
+from Carrinho;
+
+INSERT INTO Vendas
+(TempoVenda, StatusVenda, DataVenda, 
+Preco, TipoVenda, idCliente, idEntrega, idCarrinho)
 VALUES
-('20:00', 'Em andamento', '22/03/2023',  33.90, 0,1,1,1)
+('20:00:00', 'Feita', '22-02-2022', 50, 'E', 1,1,1)
 
-INSERT INTO ProdutoCliente
-(IdProduto, QuantidadePC, IdVenda, Sabores, Observacao)
-VALUES 
-(1, 1, 1, 'Pizza Catupiry', 'Sem milho')
+INSERT INTO Vendas
+(TempoVenda, StatusVenda, DataVenda, 
+Preco, TipoVenda, idCliente, idEntrega, idCarrinho)
+VALUES
+('20:30:00', 'Pendente', '22-02-2022', 50, 'L', 1,1,1)
+
+INSERT INTO Vendas
+(TempoVenda, StatusVenda, DataVenda, 
+Preco, TipoVenda, idCliente, idEntrega, idCarrinho)
+VALUES
+('21:00:00', 'Cancelada', '22-02-2022', 50, 'E', 1,1,1)
 
 SELECT *
-FROM Vendas v
-INNER JOIN Entrega e ON e.IdEntrega IS NOT NULL
-INNER JOIN Clientes c ON c.IdCliente IS NOT NULL
-INNER JOIN Produtos p ON v.IdVenda IS NOT NULL
+FROM Vendas;
 
-alter table Carrinho DROP COLUMN  QuantidadePC;
-ALTER TABLE CarrinhoProduto ADD QuantidadePC INT;
+INSERT INTO CarrinhoProduto
+(IdCarrinho, IdProduto, QuantidadePC, Sabores)
+VALUES
+(1,1, 3, 'Frango com Catupiry')
+
+INSERT INTO CarrinhoProduto
+(IdCarrinho, IdProduto, QuantidadePC, Sabores)
+VALUES
+(1,2, 1, 'Frango com Calabresa')
+
+INSERT INTO CarrinhoProduto
+(IdCarrinho, IdProduto, QuantidadePC, Sabores)
+VALUES
+(1,3, 1, 'Mussarela')
+
+SELECT *
+FROM CarrinhoProduto;
