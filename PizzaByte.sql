@@ -39,19 +39,22 @@ CREATE TABLE Vendas(
 	TipoVenda CHAR,
 	idCliente INT,
 	idEntrega INT,
+	idCarrinho INT,
 	CONSTRAINT fk_Usuarios_id FOREIGN KEY (idCliente) 
 	REFERENCES Usuarios(IdCliente),
 	CONSTRAINT fk_entrega_id FOREIGN KEY (idEntrega)
-	REFERENCES Entrega(IdEntrega)
+	REFERENCES Entrega(IdEntrega),
+	CONSTRAINT fk_carrinho_id FOREIGN KEY (idCarrinho)
+	REFERENCES Carrinho(IdCarrinho)
 );
 CREATE TABLE Carrinho(
 	IdCarrinho INT PRIMARY KEY,
-	QuantidadePC INT,
 	Sabores VARCHAR (255),
 	Observacao VARCHAR (255),
 );
 CREATE TABLE CarrinhoProduto(
 	IdCarrinho int,
+	QuantidadePC INT,
 	IdProduto int,
 	PRIMARY KEY (IdCarrinho, IdProduto),
 	FOREIGN KEY(IdProduto)
@@ -69,7 +72,7 @@ DescricaoProduto, ValorProduto)
 VALUES 
 ('Pizza pequena tradicional', 'Pizza', 'Pizza Pequena até 2 sabores', 18.90);
 
-INSERT INTO Clientes
+INSERT INTO Usuarios
 (NomeCliente, TelefoneCliente, EmailCliente, SenhaCliente, Endereco)
 VALUES 
 ('Taís Waine', '(92) 99111-1111', 'taisWaine@gmail.com', 'senhadatais', 'Avenida Paulista, n57, casa verde');
@@ -79,8 +82,8 @@ INSERT INTO Entrega
 VALUES
 ('Carlos Alberto', 'Moto Honda pr 147', '(92) 99999-9999', 10.00, 5.00)
 
-INSERT INTO Vendas
-(TempoVenda, StatusVenda, DataVenda, Preco, TipoVenda, idCliente, idProduto, idEntrega)
+INSERT INTO Carrinho
+(IdCarrinho, QuantidadePC, Sabores, Observacao)
 VALUES
 ('20:00', 'Em andamento', '22/03/2023',  33.90, 0,1,1,1)
 
@@ -95,3 +98,5 @@ INNER JOIN Entrega e ON e.IdEntrega IS NOT NULL
 INNER JOIN Clientes c ON c.IdCliente IS NOT NULL
 INNER JOIN Produtos p ON v.IdVenda IS NOT NULL
 
+alter table Carrinho DROP COLUMN  QuantidadePC;
+ALTER TABLE CarrinhoProduto ADD QuantidadePC INT;
