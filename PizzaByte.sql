@@ -15,7 +15,7 @@ CREATE TABLE Usuarios(
 	TipoCliente CHAR(1),
 	NomeCliente VARCHAR(255),
 	TelefoneCliente VARCHAR(16), /*Imaginei que VARCHAR seria melhor por conta das barrinhas ex: (99) 9 9999-9999*/
-	EmailCliente VARCHAR(255),
+	/*EmailCliente VARCHAR(255),
 	SenhaCliente VARCHAR(255),
 	Endereco VARCHAR(255)
 );
