@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Backend.Controllers
 {
     [Route("[controller]")]
-    public class UsuariosController : Controller
+    public class VendasController : Controller
     {
         public IActionResult Index()
         {
@@ -18,13 +18,13 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Usuarios usuario)
+        public IActionResult Create([FromBody] Vendas venda)
         {
             return Ok("Create");
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Usuarios usuario)
+        public IActionResult Update(int id, [FromBody] Vendas venda)
         {
             return Ok("Update");
         }
