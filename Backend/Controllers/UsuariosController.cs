@@ -1,39 +1,79 @@
-﻿using Backend.Models;
+﻿using Backend.Data;
+using Backend.Models;
+using Backend.Services.Usuarios;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers
 {
-
+    [ApiController]
     [Route("[controller]")]
     public class UsuariosController : Controller
     {
-        public IActionResult Index()
+        public readonly UsuariosService usuariosService;
+
+        public UsuariosController(UsuariosService usuariosService)
         {
-            return Ok("Listando usuários");
+            this.usuariosService = usuariosService;
+        }
+        
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Ok(usuariosService.GetAll());
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetOne(int id)
+        [HttpGet("{idCliente}")]
+        public IActionResult GetOne(int idCliente)
         {
-            return Ok("Listando somente o usuário: " + id);
+            var usuario = usuariosService.GetOne(idCliente);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            return Ok(usuario);
         }
 
         [HttpPost]
-        public IActionResult CreateUsuarios([FromBody] Usuarios usuarios)
+        public IActionResult CreateUsuarios(Usuarios usuario)
         {
-            return Ok("Criando Usuário");
+            try
+            {
+                usuariosService.Create(usuario);
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpPut("{id}")] //revisar porque não sabemos o que deve mudar
-        public IActionResult UpdateUsuario(int id)
+        [HttpPut("{idCliente}")]
+        public IActionResult UpdateUsuario(int idCliente, Usuarios usuario)
         {
-            return Ok("Atualizando usuário");
+            try
+            {
+                usuariosService.Update(idCliente, usuario);
+                return Ok(usuario);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteUsuarios(int id)
+        [HttpDelete("{idCliente}")]
+        public IActionResult DeleteUsuarios(int idCliente)
         {
-            return Ok("Deletando um Usuário");
+            try
+            {
+                usuariosService.Delete(idCliente);
+                return Ok(idCliente);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
