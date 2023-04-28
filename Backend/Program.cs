@@ -1,7 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 
 using Backend.Data;
 using Backend.Services.Entrega;
-using Microsoft.EntityFrameworkCore;
+using Backend.Services.Usuarios;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddDbContext<ComandaDbContext>(options =>
 });
 
 builder.Services.AddScoped<EntregaService>();
+builder.Services.AddScoped<UsuariosService>();
 
 builder.Services.AddControllers();
 

@@ -9,6 +9,6 @@ namespace Backend.Data
         public ComandaDbContext(DbContextOptions<ComandaDbContext> options) : base(options) { }
 
         public DbSet<Entrega> Entrega { get; set; }
-        
-    }
+        public DbSet<Usuarios> Usuarios { get; set; } 
+      }
 }
