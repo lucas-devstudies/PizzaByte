@@ -1,38 +1,78 @@
 ﻿using Backend.Models;
+using Backend.Services.Entrega;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
 {
+    [ApiController]
     [Route("[controller]")]
     public class EntregaController : Controller
     {
-        public IActionResult Index()
+        public readonly EntregaService entregaService;
+       
+
+        public EntregaController(EntregaService entregaService)
         {
-            return Ok("GetAll");
+            this.entregaService = entregaService;
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetOne(int id)
+        [HttpGet]
+        public IActionResult GetAll()
         {
-            return Ok("GetOne");
+            return Ok(entregaService.GetAll());
+        }
+
+        [HttpGet("{IdEntrega}")]
+        public IActionResult GetOne(int IdEntrega)
+        {
+            var entrega = entregaService.GetOne(IdEntrega);
+            if (entrega == null)
+            {
+                return NotFound();
+            }
+            return Ok(entrega);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Entrega entrega)
+        public IActionResult CreateEntrega(Entrega entrega)
         {
-            return Ok("Create");
+            try
+            {
+                entregaService.Create(entrega);
+                return Ok(entrega);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Entrega entrega)
+        [HttpPut("{IdEntrega}")]
+        public IActionResult UpdateEntrega(int IdEntrega, Entrega entrega)
         {
-            return Ok("Update");
+            try
+            {
+                entregaService.Update(IdEntrega, entrega);
+                return Ok(entrega);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{IdEntrega}")]
+        public IActionResult DeleteEntrega(int IdEntrega)
         {
-            return Ok("Delete");
+            try
+            {
+                entregaService.Delete(IdEntrega);
+                return Ok(IdEntrega);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

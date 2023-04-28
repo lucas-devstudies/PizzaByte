@@ -1,14 +1,17 @@
-using Backend.Data;
-using Backend.Services.Usuarios;
 using Microsoft.EntityFrameworkCore;
+
+using Backend.Data;
+using Backend.Services.Entrega;
+using Backend.Services.Usuarios;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add connection
-builder.Services.AddDbContext<ComandaDbContext>(options => {
+builder.Services.AddDbContext<ComandaDbContext>(options =>
+{
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddScoped<EntregaService>();
 builder.Services.AddScoped<UsuariosService>();
 
 builder.Services.AddControllers();
