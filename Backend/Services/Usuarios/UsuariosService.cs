@@ -37,7 +37,9 @@ namespace Backend.Services.Usuarios
                 usuariosToUpdate.tipoCliente = usuario.tipoCliente;
                 usuariosToUpdate.nomeCliente = usuario.nomeCliente;
                 usuariosToUpdate.telefoneCliente = usuario.telefoneCliente;
-
+                usuariosToUpdate.EmailCliente = usuario.EmailCliente;
+                usuariosToUpdate.SenhaCliente = usuario.SenhaCliente;
+                usuariosToUpdate.EnderecoCliente = usuario.EnderecoCliente;
                 context.SaveChanges();
 
             }
