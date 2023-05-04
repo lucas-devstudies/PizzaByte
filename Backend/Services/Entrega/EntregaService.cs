@@ -36,11 +36,11 @@ namespace Backend.Services.Entrega
             var entregaToUpdate = context.Entrega.Find(IdEntrega);
             if (entregaToUpdate != null)
             {
-                entregaToUpdate.NomeMotoboy = entrega.NomeMotoboy;
-                entregaToUpdate.VeiculoMotoboy = entrega.VeiculoMotoboy;
-                entregaToUpdate.TelefoneMotoboy = entrega.TelefoneMotoboy;
+                entregaToUpdate.IdEntrega = entrega.IdEntrega;
+                entregaToUpdate.IdEntregador = entrega.IdEntregador;
                 entregaToUpdate.ValorEntrega = entrega.ValorEntrega;
-                entregaToUpdate.ValorMotoboy = entrega.ValorMotoboy;
+                entregaToUpdate.StatusEntrega = entrega.StatusEntrega;
+                entregaToUpdate.DataEntrega = entrega.DataEntrega;
 
                 context.SaveChanges();
 

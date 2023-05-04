@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Backend.Models
 {
@@ -6,14 +7,16 @@ namespace Backend.Models
     {
 		[Key]
 	public int IdEntrega { get; set; }
-	public String NomeMotoboy { get; set; }
-	public String VeiculoMotoboy { get; set; }
-	public String TelefoneMotoboy { get; set; }
-	public decimal ValorEntrega { get; set; }
-	public decimal ValorMotoboy { get; set; }
-
-
-
         
+		[ForeignKey ("IdEntregador")]
+    public int IdEntregador { get; set; }
+	
+	public decimal ValorEntrega { get; set; }
+
+	public string StatusEntrega { get; set; } // VER
+
+	public DateTime DataEntrega { get; set; }
+	
+
     }
 }

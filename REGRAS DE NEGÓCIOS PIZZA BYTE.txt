@@ -1,0 +1,43 @@
+REGRAS DE NEGÓCIOS PIZZA BYTE
+
+1. Come gerente, quero cancelar uma venda, para que possa lidar com qualquer problema que possa surgir.
+    - Task: Criar um endpoint DELETE /vendas/{id} para cancelar uma venda específica.
+
+2. Come funcionário, quero cadastrar produtos e seus valores, para que os clientes possam escolher entre várias opções de produtos.
+    - Task: Criar um endpoint POST /produtos para adicionar um novo produto com seu valor correspondente.
+    - Task: Criar um endpoint GET /produtos para visualizar todos os produtos cadastrados.
+    - Task: Validar a entrada de novos produtos, evitando duplicação e valores iguais a zero.
+
+3. Come funcionário, quero cadastrar entregadores, para que possamos atribuir entregadores aos pedidos dos clientes.
+    - Task: Criar um endpoint POST /entregadores para adicionar um novo entregador.
+    - Task: Criar um endpoint GET /entregadores para visualizar todos os entregadores cadastrados.
+    - Task: Validar a entrada de novos entregadores, evitando duplicação.
+
+4. Come cliente, quero fazer um pedido, para que possa comprar pizzas online.
+    - Task: Criar um endpoint POST /pedidos para criar um novo pedido com produtos e quantidades selecionados.
+    - Task: Armazenar o pedido do cliente em um carrinho de compras.
+
+5. Come cliente, quero alterar meu pedido, para que possa corrigir ou adicionar produtos ao meu pedido.
+    - Task: Criar um endpoint PUT /pedidos/{id} para modificar o pedido do cliente no carrinho de compras.
+
+6. Come cliente, quero consultar meu pedido, para que possa verificar o status e os detalhes da minha compra.
+    - Task: Criar um endpoint GET /pedidos/{id} para que o cliente visualize seu pedido e detalhes da compra.
+
+7. Come cliente, quero escolher a forma de pagamento, para que eu possa pagar pelo meu pedido.
+    - Task: Criar um endpoint PUT /pedidos/{id}/pagamento para permitir que o cliente escolha a forma de pagamento.
+
+8. Come cliente, quero informar meu CEP, para que a entrega possa ser realizada no endereço correto.
+    - Task: Criar um endpoint PUT /pedidos/{id}/endereco para que o cliente informe seu CEP.
+
+9. Come cliente, quero finalizar minha compra, para que meu pedido seja processado e entregue.
+    - Task: Criar um endpoint PUT /pedidos/{id}/finalizar para finalizar o pedido do cliente.
+    - Task: Armazenar o pedido do cliente em um carrinho de vendas.
+
+10. Come entrega, quero selecionar o entregador para um pedido específico, para que ele possa ser entregue a tempo.
+    - Task: Criar um endpoint PUT /pedidos/{id}/entregador para atribuir um entregador a um pedido.
+
+11. Come entregador, quero realizar a entrega de um pedido, para que o cliente receba sua compra.
+      - Task: Criar um endpoint PUT /pedidos/{id}/entrega para que o entregador possa confirmar a entrega do pedido.
+
+
+		
